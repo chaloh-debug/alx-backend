@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+""" LRU Caching """
+from base_caching import BaseCaching
+from collections import OrderedDict
+
+
+class LRUCache(BaseCaching):
+    """ Implements LRU cache to store and remove items from
+    a dictionary if limit is reached.
+    """
+    def __init__(self):
+        """ Initialize the cache. """
+        super().__init__()
+        self.cache_data = OrderedDict()
+
+    def put(self, key, item):
+        """ Add item to cache. """
+        if key is None or item is None:
+            return
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 >  BaseCaching.MAX_ITEMS:
+                least_ru, _ = self.cache_data.popitem(last=True)
+                print("DISCARD", least_ru)
+            self.cache_data[key] = item
+            self.cache_data.move_to_end(key, last=False)
+        else:
+            self.cache_data[key] = item
+
+    def get(self, key):
+        """ Retrieve item by key. """
+        if key is not None and key in self.cache_data:
+            self.cache_data.move_to_end(key, last=False)
+        return self.cache_data.get(key, None)

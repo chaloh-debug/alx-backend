@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ FIFO Caching """
-from base_caching import BaseCaching
-
 from collections import OrderedDict
+
+from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):

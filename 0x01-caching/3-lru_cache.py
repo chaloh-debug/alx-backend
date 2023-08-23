@@ -13,14 +13,12 @@ class LRUCache(BaseCaching):
         super().__init__()
         self.cache_data = OrderedDict()
 
-    def put(self, key, item):
-        """ Add item to cache. """
-        if key is None or item is None:
+    if key is None or item is None:
             return
         if key not in self.cache_data:
-            if len(self.cache_data) + 1 >  BaseCaching.MAX_ITEMS:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
                 least_ru, _ = self.cache_data.popitem(True)
-                print("DISCARD", least_ru)
+                print("DISCARD:", least_ru)
             self.cache_data[key] = item
             self.cache_data.move_to_end(key, last=False)
         else:
